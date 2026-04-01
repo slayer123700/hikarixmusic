@@ -22,52 +22,56 @@ from AloneMusic.utils.formatters import get_readable_time
 from AloneMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS, OWNER_ID
 from strings import get_string
+STICKER_FILE_ID = random.choices(config.START_STICKER_FILE_ID, weights=[1, 1])[0]
 
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
+   await message.react("🍓", big=True)
 
-    loading_1 = await message.reply_text("💞")
-    await asyncio.sleep(0.1)
-    
-    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ</b>")
-    await asyncio.sleep(0.1)
-    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ.</b>")
-    await asyncio.sleep(0.1)
-    await loading_1.edit_text("<b>ʟᴏᴀᴅɪɴɢ..</b>")
-    await asyncio.sleep(0.1)
-    await loading_1.edit_text("<b>ᴀʟᴍᴏsᴛ ʜᴇʀᴇ...</b>")
-    await asyncio.sleep(0.1)
-    await loading_1.delete()
+    x = await message.reply_text(
+        "`ɪɴɪᴛɪᴀʟɪᴢɪɴɢ ꜱʏꜱᴛᴇᴍꜱ...`",
+    )
 
-    started_msg = await message.reply_text(text="<b>sᴛᴀʀᴛᴇᴅ...<a href='https://files.catbox.moe/27jpsi.jpg' target='_blank'>ㅤ ㅤㅤㅤ</a></b>")
-    await asyncio.sleep(0.4)
-    await started_msg.delete()
+    await sleep(0.4)
 
-    # Deep Linking Logic
-    if len(message.text.split()) > 1:
-        name = message.text.split(None, 1)[1]
-        
-        if name.startswith("help"):
-            keyboard = help_pannel(_)
-            await message.reply_text(
-                text="""Hola!!🧸
-𝖨 𝖺𝗆 Mɪᴛᴀ, 𝗒𝗈𝗎𝗋 𝗉𝗈𝗐𝖾𝗋𝗋𝗎𝗅 & 𝗆𝗂𝗌𝗂𝗗𝗂𝗍𝗁𝗇𝗂𝗇𝗀 𝗆𝖺𝗇𝖺𝗀𝖾𝗆𝖾𝗇𝗍 𝖻𝗈𝗍, 𝖽𝖾𝗌𝗂𝗀𝗇𝖾𝖽 𝗍𝗈 𝗁𝖾𝗅𝗉 𝗒𝗈𝗎 𝗍𝗈𝗍𝖺ʟ 𝗈𝗏𝖾𝗋 𝗒𝗈𝗎𝗋 𝗀𝗋𝗈𝗎𝗉𝗌 𝖾𝖺𝗌𝗂𝗅𝗒 𝗎𝗌𝗂𝗇𝗀 𝗆𝗒 𝗉𝗈𝗐𝖾𝗋𝖿𝗎𝗅 𝗆𝗈𝖽𝗎𝗅𝖾𝗌 𝖺𝗇𝖽 𝖼𝗈𝗆𝗆𝖺𝗇𝖽𝗌!
+    await x.edit_text(
+        "`> ꜱʏꜱᴛᴇᴍꜱ ᴏɴʟɪɴᴇ`",
+    )
 
-✨ 𝖶𝗁𝖺𝗍 𝖨 𝖢𝖺𝗇 𝖣𝗈:
- • 𝖲𝖾𝖺𝗆𝗅𝖾𝗌𝗌 𝗆𝖺𝗇𝖺𝗀𝖾𝗆𝖾𝗇𝗍 𝗈𝖿 𝗒𝗈𝗎𝗋 𝗀𝗋𝗈𝗎𝗉𝗌
- • 𝖯𝗈𝗐𝖾𝗋𝖿𝗎𝗅 𝗆𝗈𝖽𝖾𝗋𝖺𝗍𝗂𝗈𝗇 𝗍𝗈𝗈𝗅𝗌
- • 𝖥𝗎𝗇 𝖺𝗇𝖽 𝖾𝗇𝗀𝖺𝗀𝗂𝗇𝗀 𝖿𝖾𝖺𝗍𝗎𝗋ᴇ𝗌
+    await sleep(0.4)
 
-📚 𝖭𝖾𝖾𝖽 𝖧𝖾𝗅𝗉?
-𝖢𝗅𝗂𝖼𝗄 𝗍𝗁𝖾 𝖧𝖾𝗅𝗉 𝖻𝗎𝗍𝗍𝗈𝗇 𝖻𝗲𝗹𝗼𝘄 𝘁𝗼 𝗀𝗲𝘁 𝗮𝗹𝗹 𝗱𝗲𝘁𝗮𝗶𝗹𝘀.
-""",
-                reply_markup=keyboard
-            )
-            await message.react("🍓", big=True)
-            return
+    await x.delete()
+
+    await sleep(0.2)
+
+    await message.reply_cached_media(file_id=STICKER_FILE_ID)
+    await sleep(0.3)
+
+    user_mention = message.from_user.mention(style="md")
+    bot_mention = app.me.mention(style="md")
+
+    await message.reply_photo(
+        photo=config.START_IMG_URL,
+        caption=(
+            f"𝗜 𝗮𝗺 「 ʀʏᴢᴇɴ ᴋᴜʀᴏᴋᴀᴍɪ 」 ♡, 𝘆𝗼𝘂𝗿 𝘃𝗲𝗿𝘀𝗮𝘁𝗶𝗹𝗲 𝘁𝗮𝗰𝘁𝗶𝗰𝗮𝗹 𝗺𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁 𝗯𝗼𝘁, "
+            "𝗱𝗲𝘀𝗶𝗴𝗻𝗲𝗱 𝘁𝗼 𝗵𝗲𝗹𝗽 𝘆𝗼𝘂 𝘁𝗮𝗸𝗲 𝗼𝘃𝗲𝗿 𝘆𝗼𝘂𝗿 𝗴𝗿𝗼𝘂𝗽𝘀 𝘄𝗶𝘁𝗵 𝗲𝗮𝘀𝗲 𝘂𝘀𝗶𝗻𝗴 𝗺𝘆 𝗽𝗼𝘄𝗲𝗿𝗳𝘂𝗹 𝗺𝗼𝗱𝘂𝗹𝗲𝘀 𝗮𝗻𝗱 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀!\n"
+            ">\n"
+            "> • 𝗦𝗲𝗮𝗺𝗹𝗲𝘀𝘀 𝗺𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁 𝗼𝗳 𝘆𝗼𝘂𝗿 𝗴𝗿𝗼𝘂𝗽𝘀 🚀\n"
+            "> • 𝗣𝗼𝘄𝗲𝗿𝗳𝘂𝗹 𝗺𝗼𝗱𝗲𝗿𝗮𝘁𝗶𝗼𝗻 𝘁𝗼𝗼𝗹𝘀 🛡️\n"
+            "> • 𝗙𝘂𝗻 𝗮𝗻𝗱 𝗲𝗻𝗴𝗮𝗴𝗶𝗻𝗴 𝗳𝗲𝗮𝘁𝘂𝗿𝗲𝘀 🎮\n"
+            "✧ 𝗧𝗔𝗖𝗧𝗜𝗖𝗔𝗟 𝗖𝗢𝗠𝗠𝗔𝗡𝗗 𝗨𝗡𝗜𝗧 ✧ 🛡️ ║ ▸ READY\n"
+            ">\n"
+            "> \"𝗗𝗶𝘀𝗰𝗶𝗽𝗹𝗶𝗻𝗲 𝗙𝗼𝗿𝗴𝗲𝘀 𝘄𝗮𝗿𝗿𝗶𝗼𝗿𝘀.\" ⚔️\n"
+            "> — 𝗠𝘂𝘀𝗮𝘀𝗵𝗶 ✦\n"
+            "📚 𝗡𝗲𝗲𝗱 𝗛𝗲𝗹𝗽?\n"
+            "𝗖𝗹𝗶𝗰𝗸 𝘁𝗵𝗲 𝗛𝗲𝗹𝗽 𝗯𝘂𝘁𝘁𝗼𝗻 𝗯𝗲𝗹𝗼𝘄 𝘁𝗼 𝗴𝗲𝘁 𝗮𝗹𝗹 𝗱𝗲𝘁𝗮𝗶𝗹𝘀 ✨\n"
+            "✧ ᴇɴᴅ ᴏꜰ ᴛʀᴀɴꜱᴍɪꜱꜱɪᴏɴ ✧ 🌌 ║ ⬢"
+        ),
+        reply_markup=get_main_menu_buttons()
+    )
 
         if name.startswith("sud"):
             await sudoers_list(client=client, message=message, _=_)
