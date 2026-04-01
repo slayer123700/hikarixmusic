@@ -2,43 +2,49 @@ from pyrogram.types import InlineKeyboardButton
 import config
 from AloneMusic import app
 
-def start_panel(_):
-    # Fetching values dynamically
+def private_panel(_):
+    """
+    Renamed from start_panel to private_panel to fix the ImportError 
+    in AloneMusic/plugins/bot/settings.py
+    """
     bot_username = app.username
-    support_chat = config.SUPPORT_CHAT
     
     buttons = [
         [
             InlineKeyboardButton(
-                text="➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ",
+                text="✨ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ✨",
                 url=f"https://t.me/{bot_username}?startgroup=true"
             ),
         ],
         [
             InlineKeyboardButton(
-                text="🎶 ᴍᴜsɪᴄ", 
+                text="🎵 ᴍᴜsɪᴄ", 
                 callback_data="Music_"
             ),
             InlineKeyboardButton(
-                text="ℹ️ ʜᴇʟᴘ & ᴄᴍᴅs", 
+                text="🛠️ ʜᴇʟᴘ", 
                 callback_data="settings_back_helper"
             ),
         ],
         [
             InlineKeyboardButton(
-                text="📞 sᴜᴘᴘᴏʀᴛ", 
-                url=f"{support_chat}"
+                text="💬 sᴜᴘᴘᴏʀᴛ", 
+                url=config.SUPPORT_CHAT
             ),
             InlineKeyboardButton(
-                text="🔔 ᴜᴘᴅᴀᴛᴇs", 
+                text="📢 ᴜᴘᴅᴀᴛᴇs", 
                 url="https://t.me/pookie_updates"
             ),
         ],
         [
             InlineKeyboardButton(
-                text="👑 ᴏᴡɴᴇʀ", 
+                text="👑 ᴅᴇᴠᴇʟᴏᴘᴇʀ", 
                 url="https://t.me/NottyBcha"
             ),
         ],
     ]
     return buttons
+
+# Keep this for backward compatibility if other files still use the old name
+def start_panel(_):
+    return private_panel(_)
