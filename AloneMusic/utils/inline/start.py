@@ -8,35 +8,51 @@
 # All rights reserved.
 
 from pyrogram.types import InlineKeyboardButton
-
 import config
 from AloneMusic import app
 
-
 def start_panel(_):
+    # Using config variables or app username dynamically
+    # Ensure these are defined in your config.py
+    bot_username = app.username
+    support_chat = config.SUPPORT_CHAT
+    
     buttons = [
         [
             InlineKeyboardButton(
-                text=_["S_B_1"], url=f"https://t.me/{app.username}?startgroup=true"
+                text="➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ",
+                url=f"https://t.me/{bot_username}?startgroup=true"
             ),
-            InlineKeyboardButton(text=_["S_B_2"], url=config.SUPPORT_CHAT),
         ],
-    ]
-    return buttons
-
-
-def private_panel(_):
-    buttons = [
         [
             InlineKeyboardButton(
-                text=_["S_B_3"],
-                url=f"https://t.me/{app.username}?startgroup=true",
-            )
+                text="ℹ️ ʜᴇʟᴘ & ᴄᴍᴅs", 
+                callback_data="settings_back_helper"
+            ),
+            InlineKeyboardButton(
+                text="🎵 ᴍᴜsɪᴄ", 
+                callback_data="Music_"
+            ),
         ],
         [
-            InlineKeyboardButton(text=_["S_B_2"], callback_data="shiv_aarumi"),
-            InlineKeyboardButton(text="💌 ʏᴛ-ᴀᴘɪ", callback_data="bot_info_data"),
+            InlineKeyboardButton(
+                text="✨ sᴜᴘᴘᴏʀᴛ", 
+                url=f"{support_chat}"
+            ),
+            InlineKeyboardButton(
+                text="📢 ᴜᴘᴅᴀᴛᴇs", 
+                url="https://t.me/pookie_updates"
+            ),
         ],
-        [InlineKeyboardButton(text=_["S_B_4"], callback_data="settings_back_helper")],
+        [
+            InlineKeyboardButton(
+                text="❄️ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ", 
+                url="https://github.com/RolexXd/hikarixmusic"
+            ),
+            InlineKeyboardButton(
+                text="👑 ᴏᴡɴᴇʀ", 
+                url="https://t.me/billichor"
+            ),
+        ],
     ]
     return buttons
