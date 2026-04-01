@@ -25,6 +25,7 @@ OWNER_ID = int(getenv("OWNER_ID", 5303251380))
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 600))
 ADS_MODE = getenv("ADS_MODE", None)
 DEBUG_IGNORE_LOG = True
+BOT_VERSION = "𝑆𝑙𝑎𝑦𝑒𝑟2.𝑂"
 
 # --- HEROKU CONFIGURATION ---
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", "hikari")
