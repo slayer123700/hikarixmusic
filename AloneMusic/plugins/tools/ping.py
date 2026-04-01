@@ -3,11 +3,8 @@ import platform
 from datetime import datetime
 
 import pyrogram
-import telethon
-import motor
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
-from telegram import __version__ as ptb_version
 
 from AloneMusic import app
 from AloneMusic.core.call import Alone
@@ -20,22 +17,20 @@ from config import BANNED_USERS, PING_IMG_URL, BOT_VERSION, SUPPORT_CHAT, OWNER_
 async def ping_com(client: pyrogram.Client, message: Message, _):
     start_time = time.time()
     
-    # 1. Send initial "checking" photo
+    # 1. Send initial status photo
     response = await message.reply_photo(
         photo=PING_IMG_URL,
         caption=_["ping_1"].format(app.mention),
     )
 
     # 2. Fetch System Metrics
-    # Using your existing utility for UP, CPU, RAM, and Disk
     try:
         pytgping = await Alone.ping()
         UP, CPU, RAM, DISK = await bot_sys_stats()
     except Exception:
-        # Fallback if stats utility fails
         UP, CPU, RAM, DISK = "Unknown", "0%", "0%", "0%"
     
-    # 3. Calculate Response Latency
+    # 3. Calculate Latency
     end_time = time.time()
     resp_ms = round((end_time - start_time) * 1000, 2)
 
@@ -54,7 +49,7 @@ async def ping_com(client: pyrogram.Client, message: Message, _):
         f"Sʏsᴛᴇᴍs ᴀʀᴇ ᴏᴘᴇʀᴀᴛɪᴏɴᴀʟ ᴀɴᴅ ʀᴇᴀᴅʏ ᴛᴏ ᴠɪʙᴇ! 🔊"
     )
 
-    # 5. Sleek Navigation Buttons
+    # 5. Buttons
     buttons = InlineKeyboardMarkup([
         [
             InlineKeyboardButton("✨ Sᴜᴘᴘᴏʀᴛ", url=SUPPORT_CHAT),
@@ -65,7 +60,6 @@ async def ping_com(client: pyrogram.Client, message: Message, _):
         ]
     ])
 
-    # 6. Edit the caption with full details
     await response.edit_text(
         alive_text,
         reply_markup=buttons
@@ -73,19 +67,14 @@ async def ping_com(client: pyrogram.Client, message: Message, _):
 
 @app.on_callback_query(filters.regex("version_info"))
 async def callback_query_handler(client: pyrogram.Client, callback_query):
-    # Dynamic library version fetching
-    try:
-        version_info = (
-            f"🎨 Bᴏᴛ Vᴇʀsɪᴏɴ: {BOT_VERSION}\n"
-            f"────────────────────\n"
-            f"📱 Pʏʀᴏɢʀᴀᴍ: {pyrogram.__version__}\n"
-            f"📡 Tᴇʟᴇᴛʜᴏɴ: {telethon.__version__}\n"
-            f"🤖 PTB: {ptb_version}\n"
-            f"🗄️ Mᴏᴛᴏʀ: {motor.version}\n"
-            f"🐍 Pʏᴛʜᴏɴ: {platform.python_version()}"
-        )
-    except Exception as e:
-        version_info = f"Error fetching versions: {str(e)}"
+    # Only showing Pyrogram and Python to avoid import errors
+    version_info = (
+        f"🎨 Bᴏᴛ Vᴇʀsɪᴏɴ: {BOT_VERSION}\n"
+        f"────────────────────\n"
+        f"📱 Pʏʀᴏɢʀᴀᴍ: {pyrogram.__version__}\n"
+        f"🐍 Pʏᴛʜᴏɴ: {platform.python_version()}\n\n"
+        f"✅ Sʏsᴛᴇᴍ Sᴛᴀʙʟᴇ"
+    )
 
     await callback_query.answer(
         version_info,
