@@ -29,19 +29,22 @@ STICKER_FILE_ID = random.choices(config.START_STICKER_FILE_ID, weights=[1, 1])[0
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-   await message.react("🍓", big=True)
+    
+    # Corrected indentation below
+    await message.react("🍓", big=True)
 
     x = await message.reply_text(
         "`ɪɴɪᴛɪᴀʟɪᴢɪɴɢ ꜱʏꜱᴛᴇᴍꜱ...`",
     )
 
-    await sleep(0.4)
+    # Corrected to use asyncio.sleep
+    await asyncio.sleep(0.4)
 
     await x.edit_text(
         "`> ꜱʏꜱᴛᴇᴍꜱ ᴏɴʟɪɴᴇ`",
     )
 
-    await sleep(0.4)
+    await asyncio.sleep(0.4)
 
     await x.delete()
 
