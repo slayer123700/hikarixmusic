@@ -42,7 +42,7 @@ async def start_pm(client, message: Message, _):
     await asyncio.sleep(0.1)
     await loading_1.delete()
 
-    started_msg = await message.reply_text(text="<b>sᴛᴀʀᴛᴇᴅ...<a href='https://files.catbox.moe/xyy4qd.mp4' target='_blank'>ㅤ ㅤㅤㅤ</a></b>")
+    started_msg = await message.reply_text(text="<b>sᴛᴀʀᴛᴇᴅ...<a href='https://files.catbox.moe/27jpsi.jpg' target='_blank'>ㅤ ㅤㅤㅤ</a></b>")
     await asyncio.sleep(0.4)
     await started_msg.delete()
 
